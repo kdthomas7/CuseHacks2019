@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<hmtl>
+    <head>
+        
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+        
+        <style>
+        body, html {
+            height: 100%;
+            
+        }
+        .parallax { 
+            /* The image used */
+            
+            background-image: url("https://www.syracuse.edu/wp-content/uploads/shaw-quadrangle-1600x1065.jpg");
+            /* Set a specific height */
+            height: 100%; 
+            /* Create the parallax scrolling effect */
+            background-attachment: fixed;
+            background-position: center;
+            background-size: cover;
+        }
+        .parallax_text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%)
+        }
+        .btn-group-vertical button {
+            background-color: #53AED9; /* Green background */
+            border: 1px medium blue; /* Green border */
+            color: white; /* White text */
+            font-size: 20px;
+            padding: 15px 200px; /* Some padding */
+            cursor: pointer; /* Pointer/hand icon */
+            float: left/* Float the buttons side by side */
+            
+        }
+        .btn-group-vertical button:not(:last-child) {
+            border-right: none; /* Prevent double borders */
+            
+        }
+        /* Clear floats (clearfix hack) */
+        .btn-group-vertical:after {
+            content: "";
+            clear: both;
+            display: table;
+            
+        }
+        /* Add a background color on hover */
+        .btn-group-vertical button:hover {
+            background-color: #4482A1;
+            
+        }
+        h1{
+            color:blue;
+        }
+        
+  
+        
+        </style>
+        
+        <!-- Container element -->
+        <div class="parallax" style="opacity:0.57;filter:alpha(opacity=40)" ></div>
+        <div class="parallax_text">
+            <img src="2.png" alt="Control Flow" width="400" height="250">
+        </div>
+        <div style="height:1000px; background-image: url(http://www.eriecanal.org/maps/Syracuse-map-1919.jpg); 
+            opacity:0.6;filter:alpha(opacity=40), font-size:36px">
+            <div style = "position: absolute; top: 175%; bottom: 50%; transform: translate(300%, 500%)">
+                <div class = "hover">
+                    <div class="btn-group-vertical" style= "position: absolute; top: 175%; bottom: 50%;transform: translate(100%, 500%)">
+                      <a href="login.html">
+                        <button type="button" class="btn btn-primary">Login</button></a>
+                      <a href = "SignUp.html">
+                        <button type="button" class="btn btn-primary" style = "padding: 15px 189px;">Sign Up</button></a>
+                      <a href = "map.html">
+                          <button type = "button" class = "btn btn-primary" style = "padding: 15px 150px;">Crowd Flow Map</button>
+                      </a>
+                    </div>
+                </div>
+                 
+            </div>
+   
+   
+        </head>
+        
+        <body >
+
+            <blockquote class = "underline">
+                
+            </blockquote> 
+        </body>
+    
+</hmtl>
+

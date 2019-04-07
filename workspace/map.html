@@ -1,0 +1,568 @@
+<html>
+
+  <a href ="./CHwel.html"><button>Home</button></a>
+  <a href ="profile.html"><button>Profile</button></a>
+  <button> Check In </button>
+  
+  <center><h1>My Crowd Flow Map</h1></center>
+
+  <p> Here's how many people with your selected tags are in your area:</p>
+
+  <p>Carrier Dome Count = <span id="cdCount" </span></p>
+
+  <p>Life Science Count = <span id="lsCount" </span></p>
+
+
+  
+
+<head>
+
+<meta charset="utf-8">
+
+<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<title>ArcGIS JavaScript Tutorials: Display point, line, and polygon graphics</title>
+
+<style>
+
+  html, body, #viewDiv {
+
+    padding: 0;
+
+    margin: 0;
+
+    height: 90%;
+
+    width: 100%;
+
+  }
+
+</style>
+
+  <link rel="stylesheet" href="https://js.arcgis.com/4.11/esri/css/main.css">
+
+<script src="https://js.arcgis.com/4.11/"></script>
+
+  
+
+  <script>
+
+require([
+
+  "esri/Map",
+
+  "esri/views/MapView",
+
+  "esri/Graphic",
+
+  "esri/geometry/Point",
+
+  "esri/symbols/SimpleMarkerSymbol",
+
+  "esri/geometry/Polyline",
+
+  "esri/symbols/SimpleLineSymbol",
+
+  "esri/geometry/Polygon",
+
+  "esri/symbols/SimpleFillSymbol",
+
+  "esri/widgets/Locate",
+
+  "esri/widgets/Track"
+
+], function(Map, MapView,
+
+      Graphic, Point, SimpleMarkerSymbol,
+
+      Polyline, SimpleLineSymbol,
+
+      Polygon, SimpleFillSymbol, Locate, Track
+
+) {
+
+  
+
+  var map = new Map({
+
+    basemap: "topo-vector"
+
+  });
+
+    
+
+  var view = new MapView({
+
+    container: "viewDiv",  
+
+    map: map,
+
+    center: [-76.1351, 43.0392],
+
+    zoom: 15
+
+  });
+
+  
+
+  var locate = new Locate({
+
+          view: view,
+
+          useHeadingEnabled: false,
+
+          // goToOverride: function(view, options) {
+
+          //   options.target.scale = 1500;
+
+          //   return view.goTo(options.target);
+
+          // }
+
+        });
+
+        view.ui.add(locate, "top-left");
+
+  
+
+  var track = new Track({
+
+          view: view,
+
+          graphic: new Graphic({
+
+            symbol: {
+
+              type: "simple-marker",
+
+              size: "9px",
+
+              color: "green",
+
+              outline: {
+
+                color: "#efefef",
+
+                width: "1.2px"
+
+              }
+
+            }
+
+          }),
+
+          useHeadingEnabled: false,
+
+          goToLocationEnabed: false,
+
+          goToOverride: function(view, options) {
+
+            options.target.scale = null;
+
+            return view.goTo(options);
+
+          }
+
+        });
+
+        view.ui.add(track, "top-left");
+
+
+        view.when(function() {
+
+          // track.start();
+
+          // view.zoom = 12;
+
+        });
+
+  
+
+  
+
+  // Create a point
+
+  var point = new Point({
+
+    longitude: -76.1351,
+
+    latitude: 43.0392
+
+  });
+
+
+  // Create a symbol for drawing the point
+
+  var markerSymbol = new SimpleMarkerSymbol({
+
+    color: [226, 119, 40],
+
+    outline: { 
+
+      color: [255, 255, 255],
+
+      width: 1
+
+    }
+
+  });
+
+      
+
+  // Create attributes
+
+  var attributes = {
+
+    FName: "Jane Doe",  // The name of the pipeline
+
+  };
+
+  
+
+  // Create popup template
+
+  var popupTemplate = {
+
+    title: "{FName}",
+
+    content: "Tags:Computer Science, Female"
+
+  };
+
+  var cdCount = 0;   //people in carrier dome
+
+  var lsCount = 0;   //people in life science
+
+  // creates 100 random points
+
+  for(var i  = 0; i< 100; i++){
+
+  var x = (Math.random() * (-.009)) + (-76.13);
+
+  var y = (Math.random() * (.01)) + (43.035);
+
+  
+
+    // Create a point location
+
+  var point = new Point({
+
+    longitude: x,
+
+    latitude: y
+
+  }); 
+
+   if ((x > -76.137567) && (x < -76.134930) && (y < 43.037091) && (y > 43.035582)) {
+
+      cdCount = cdCount + 1;
+
+    }
+
+    
+
+    if ((x < -76.130000) && (x > -76.131446) && (y < 43.038875) && (y > 43.036924)) {
+
+      lsCount = lsCount + 1;
+
+    }
+
+    
+
+  var pointGraphic = new Graphic({
+
+    geometry: point,
+
+    symbol: markerSymbol,
+
+    attributes: attributes,
+
+    popupTemplate: popupTemplate
+
+  });
+
+    
+
+      view.graphics.add(pointGraphic);
+
+  } 
+
+
+  
+
+  // Create a line geometry
+
+  var polyline = new Polyline({
+
+    paths: [
+
+      [-118.29026, 34.1816],
+
+      [-118.26451, 34.09664]
+
+    ]
+
+  });
+
+
+  // Create a symbol for drawing the line
+
+  var lineSymbol = new SimpleLineSymbol({
+
+    color: [226, 119, 40],
+
+    width: 2
+
+  });
+
+
+  // Create a line graphic
+
+  var polylineGraphic = new Graphic({
+
+    geometry: polyline,
+
+    symbol: lineSymbol
+
+  })
+
+
+  // Add the graphic to the view
+
+  view.graphics.add(polylineGraphic);
+
+  
+
+ //carrier dome 
+
+  var long1 = -76.137756;
+
+  var lat1 = 43.036991;
+
+  var long2 = -76.137567;
+
+  var lat2 = 43.035624;
+
+  var long3 = -76.134988;
+
+  var lat3 = 43.035582;
+
+  var long4 = -76.134930;
+
+  var lat4 = 43.037091;
+
+  var r = 200;
+
+  var g = 50;
+
+  var b = 100;
+
+  
+
+for(var i = 0; i<3; i++){
+
+  // Create a polygon geometry
+
+  var polygon = new Polygon({
+
+    rings: [
+
+      [long1, lat1],
+
+      [long2, lat2],
+
+      [long3, lat3],
+
+      [long4, lat4]
+
+      
+
+    ]
+
+  });
+
+
+  // Create a symbol for rendering the graphic
+
+  var fillSymbol = new SimpleFillSymbol({
+
+    color: [r, g, b, 0.5],
+
+    outline: {
+
+      color: [255, 255, 255],
+
+      width: 1
+
+    }
+
+  });
+
+
+  // Add the geometry and symbol to a new graphic
+
+  var polygonGraphic = new Graphic({
+
+    geometry: polygon,
+
+    symbol: fillSymbol
+
+  });
+
+
+  // Add the graphic to the view
+
+  view.graphics.add(polygonGraphic);
+
+  
+
+  long1 -= .0004;
+
+  lat1 += .0004;
+
+  long2 += -.0004;
+
+  lat2 += -.0004;
+
+  long3 += .0004;
+
+  lat3 -= .0004;
+
+  long4 += .0004;
+
+  lat4 += .0004;
+
+  r -= 20;
+
+  g += 90;
+
+  b -= 5;
+
+}
+
+  
+
+  //life science 
+
+  var long2 = -76.131335;
+
+  var lat2 = 43.036924;
+
+  var long3 = -76.130072;
+
+  var lat3 = 43.036943;
+
+  var long1 = -76.131446;
+
+  var lat1 = 43.038875;
+
+  var long4 = -76.130000;
+
+  var lat4 = 43.038875;
+
+  var r = 200;
+
+  var g = 50;
+
+  var b = 100;
+
+  
+
+for(var i = 0; i<3; i++){
+
+  // Create a polygon geometry
+
+  var polygon = new Polygon({
+
+    rings: [
+
+      [long1, lat1],
+
+      [long2, lat2],
+
+      [long3, lat3],
+
+      [long4, lat4]
+
+      
+
+    ]
+
+  });
+
+
+  // Create a symbol for rendering the graphic
+
+  var fillSymbol = new SimpleFillSymbol({
+
+    color: [r, g, b, 0.5],
+
+    outline: {
+
+      color: [255, 255, 255],
+
+      width: 1
+
+    }
+
+  });
+
+
+  // Add the geometry and symbol to a new graphic
+
+  var polygonGraphic = new Graphic({
+
+    geometry: polygon,
+
+    symbol: fillSymbol
+
+  });
+
+
+  // Add the graphic to the view
+
+  view.graphics.add(polygonGraphic);
+
+  
+
+  long1 -= .0004;
+
+  lat1 += .0004;
+
+  long2 += -.0004;
+
+  lat2 += -.0004;
+
+  long3 += .0004;
+
+  lat3 -= .0004;
+
+  long4 += .0004;
+
+  lat4 += .0004;
+
+  r -= 20;
+
+  g += 90;
+
+  b -= 5;
+
+}
+
+  document.getElementById("cdCount").innerHTML = cdCount;
+
+  document.getElementById("lsCount").innerHTML = lsCount;
+
+      
+
+});</script>
+
+</head>
+
+<body>
+
+  <div id="viewDiv"></div>
+
+</body>
+
+</html>  
